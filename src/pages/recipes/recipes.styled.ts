@@ -10,9 +10,18 @@ export const Title = styled.h1`
   margin-bottom: 40px;
 `;
 
+export const Text = styled.p`
+  font-size: 2rem;
+`;
+
 export const BlockWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 export const StyledWrapper = styled.div`

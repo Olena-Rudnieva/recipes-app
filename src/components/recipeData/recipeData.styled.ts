@@ -44,7 +44,11 @@ export const Subtitle = styled.h2`
 
 export const VideoWrapper = styled.div`
   margin-top: 30px;
-  width: 700px;
+  width: 300px;
+
+  @media (min-width: 768px) {
+    width: 700px;
+  }
 `;
 
 export const SourceWrapper = styled.div`

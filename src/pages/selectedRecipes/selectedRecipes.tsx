@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Container, RecipesList } from '../../components';
-import { selectSelectedRecipes } from '../../redux/recipesSelectors';
+import { useSelectedRecipes } from './hooks';
+// import { selectSelectedRecipes } from '../../redux/recipesSelectors';
 import { Items, Subtitle, Text, Title } from './selectedRecipes.styled';
-import { getGroupedIngredients, getGroupedInstructions } from '../../utils';
+// import { getGroupedIngredients, getGroupedInstructions } from '../../utils';
 
 const SelectedRecipes = () => {
-  const selectedRecipes = useSelector(selectSelectedRecipes);
-  const groupedIngredients = getGroupedIngredients(selectedRecipes);
-  const groupedInstructions = getGroupedInstructions(selectedRecipes);
+  const { selectedRecipes, groupedIngredients, groupedInstructions } =
+    useSelectedRecipes();
 
   return (
     <Container>
