@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Recipe } from '../types';
 import {
+  fetchCategories,
   fetchRecipeDetails,
+  fetchRecipesByCategory,
   fetchRecipesByFirstLetter,
   fetchRecipesByName,
 } from './recipesOperations';
@@ -9,6 +11,7 @@ import {
 interface RecipesState {
   recipes: Recipe[];
   recipeDetails: Recipe | null;
+  categories: string[];
   isLoading: boolean;
   error: string | null;
 }
@@ -16,6 +19,7 @@ interface RecipesState {
 const initialState: RecipesState = {
   recipes: [],
   recipeDetails: null,
+  categories: [],
   isLoading: false,
   error: null,
 };
@@ -58,6 +62,36 @@ const recipesSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchRecipeDetails.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string | null;
+    });
+    builder.addCase(fetchCategories.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      fetchCategories.fulfilled,
+      (state, action: PayloadAction<string[]>) => {
+        state.isLoading = false;
+        state.categories = action.payload;
+        state.error = null;
+      }
+    );
+    builder.addCase(fetchCategories.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as string | null;
+    });
+    builder.addCase(fetchRecipesByCategory.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      fetchRecipesByCategory.fulfilled,
+      (state, action: PayloadAction<Recipe[]>) => {
+        state.isLoading = false;
+        state.recipes = action.payload;
+        state.error = null;
+      }
+    );
+    builder.addCase(fetchRecipesByCategory.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.payload as string | null;
     });

@@ -57,3 +57,33 @@ export const fetchRecipeDetails = createAsyncThunk<
     return thunkAPI.rejectWithValue(e.message);
   }
 });
+
+export const fetchCategories = createAsyncThunk<
+  string[],
+  void,
+  { rejectValue: string }
+>('recipes/fetchCategories', async (_, thunkAPI) => {
+  try {
+    const response = await axios.get(`${API_URL}/list.php?c=list`);
+    const data = response.data;
+    return data.meals.map((meal: { strCategory: string }) => meal.strCategory);
+  } catch (e: any) {
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
+
+export const fetchRecipesByCategory = createAsyncThunk<
+  Recipe[],
+  string,
+  { rejectValue: string }
+>('recipes/fetchByCategory', async (category, thunkAPI) => {
+  try {
+    const response = await axios.get(`${API_URL}/filter.php`, {
+      params: { c: category },
+    });
+    const data = response.data;
+    return data.meals || [];
+  } catch (e: any) {
+    return thunkAPI.rejectWithValue(e.message);
+  }
+});
