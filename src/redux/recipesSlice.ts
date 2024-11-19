@@ -12,6 +12,7 @@ interface RecipesState {
   recipes: Recipe[];
   recipeDetails: Recipe | null;
   categories: string[];
+  selectedRecipes: Recipe[];
   isLoading: boolean;
   error: string | null;
 }
@@ -20,6 +21,7 @@ const initialState: RecipesState = {
   recipes: [],
   recipeDetails: null,
   categories: [],
+  selectedRecipes: [],
   isLoading: false,
   error: null,
 };
@@ -27,7 +29,24 @@ const initialState: RecipesState = {
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
-  reducers: {},
+  reducers: {
+    addSelectedRecipe: (state, action: PayloadAction<Recipe>) => {
+      const recipeExists = state.selectedRecipes.some(
+        (recipe) => recipe.idMeal === action.payload.idMeal
+      );
+      if (!recipeExists) {
+        state.selectedRecipes.push(action.payload);
+      }
+    },
+    removeSelectedRecipe: (state, action: PayloadAction<string>) => {
+      state.selectedRecipes = state.selectedRecipes.filter(
+        (recipe) => recipe.idMeal !== action.payload
+      );
+    },
+    clearSelectedRecipes: (state) => {
+      state.selectedRecipes = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipesByName.pending, (state) => {
       state.isLoading = true;
@@ -99,3 +118,5 @@ const recipesSlice = createSlice({
 });
 
 export const recipesReducer = recipesSlice.reducer;
+export const { addSelectedRecipe, removeSelectedRecipe, clearSelectedRecipes } =
+  recipesSlice.actions;

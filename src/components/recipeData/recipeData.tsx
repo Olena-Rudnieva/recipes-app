@@ -8,29 +8,41 @@ import {
 import { Loader } from '../loader';
 import {
   BottomWrapper,
+  HeartIcon,
   Image,
   InfoBlock,
   ProductsWrapper,
   SourceWrapper,
   Subtitle,
   Title,
+  TitleWrapper,
   VideoWrapper,
   Wrapper,
 } from './recipeData.styled';
 
 interface RecipeDataProps {
   recipe: Recipe;
+  isSelected: boolean;
+  handleHeartClick: () => void;
 }
 
-export const RecipeData = ({ recipe }: RecipeDataProps) => {
+export const RecipeData = ({
+  recipe,
+  isSelected,
+  handleHeartClick,
+}: RecipeDataProps) => {
   if (!recipe) return <Loader />;
   const youtubeEmbedUrl = getYouTubeEmbedUrl(recipe.strYoutube);
 
   return (
     <Wrapper>
-      <Title>{recipe.strMeal}</Title>
+      <TitleWrapper>
+        <Title>{recipe.strMeal}</Title>
+        <HeartIcon onClick={handleHeartClick} isSelected={isSelected} />
+      </TitleWrapper>
       <InfoBlock>
         <Image src={recipe.strMealThumb} alt={recipe.strMeal} />
+
         <ProductsWrapper>
           <Subtitle>Ingredients:</Subtitle>
           <ul>{formatIngredients(recipe)}</ul>

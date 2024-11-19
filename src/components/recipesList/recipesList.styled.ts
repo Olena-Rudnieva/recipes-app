@@ -10,6 +10,7 @@ export const List = styled.ul`
 `;
 
 export const RecipeItem = styled.li`
+  position: relative;
   background-color: white;
   padding: 15px;
   border-radius: 8px;
@@ -48,4 +49,22 @@ export const RecipeInfo = styled.div`
 export const AccentText = styled.span`
   color: black;
   font-weight: semibold;
+`;
+
+export const HeartIcon = styled.div<{ isSelected: boolean }>`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  color: ${(props) => (props.isSelected ? 'red' : 'gray')};
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${(props) => (props.isSelected ? 'darkred' : 'darkgray')};
+  }
+
+  &::before {
+    content: ${(props) => (props.isSelected ? "'❤️'" : "'🤍'")};
+  }
 `;

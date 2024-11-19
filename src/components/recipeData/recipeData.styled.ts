@@ -7,6 +7,12 @@ export const Wrapper = styled.div`
 
 export const Title = styled.h1`
   font-size: 3rem;
+`;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
   margin-bottom: 30px;
 `;
 
@@ -43,4 +49,19 @@ export const VideoWrapper = styled.div`
 
 export const SourceWrapper = styled.div`
   margin-top: 30px;
+`;
+
+export const HeartIcon = styled.div<{ isSelected: boolean }>`
+  cursor: pointer;
+  font-size: 24px;
+  color: ${(props) => (props.isSelected ? 'red' : 'gray')};
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${(props) => (props.isSelected ? 'darkred' : 'darkgray')};
+  }
+
+  &::before {
+    content: ${(props) => (props.isSelected ? "'❤️'" : "'🤍'")};
+  }
 `;
