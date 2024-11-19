@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { Container, RecipesList } from '../../components';
+import { Container, Pagination, RecipesList } from '../../components';
 import { Recipe } from '../../types';
 import { selectCategories, selectRecipes } from '../../redux/recipesSelectors';
 import { useEffect, useState } from 'react';
@@ -17,6 +17,8 @@ const Recipes = () => {
   const categories = useSelector(selectCategories);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -40,6 +42,15 @@ const Recipes = () => {
     label: category,
   }));
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const paginatedRecipes = recipes.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <Container>
       <Title>Recipes</Title>
@@ -55,7 +66,13 @@ const Recipes = () => {
           )}
         />
       </Wrapper>
-      <RecipesList recipes={recipes} />
+      <RecipesList recipes={paginatedRecipes} />
+      <Pagination
+        totalItems={recipes.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
     </Container>
   );
 };

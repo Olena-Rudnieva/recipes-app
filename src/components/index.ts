@@ -8,3 +8,4 @@ export * from './burgerBtn';
 export * from './mobileMenu';
 export * from './recipeData';
 export * from './recipesList';
+export * from './pagination';
