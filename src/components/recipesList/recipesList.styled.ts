@@ -6,6 +6,7 @@ export const List = styled.ul`
   gap: 20px;
   padding: 0;
   list-style-type: none;
+  margin-bottom: 40px;
 `;
 
 export const RecipeItem = styled.li`

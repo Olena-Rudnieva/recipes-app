@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { Container, Pagination, RecipesList } from '../../components';
+import { Container, Pagination, RecipesList, Search } from '../../components';
 import { Recipe } from '../../types';
 import { selectCategories, selectRecipes } from '../../redux/recipesSelectors';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,13 @@ import {
   fetchCategories,
   fetchRecipesByName,
 } from '../../redux/recipesOperations';
-import { customStyles, Title, Wrapper } from './recipes.styled';
+import {
+  BlockWrapper,
+  customStyles,
+  StyledWrapper,
+  Title,
+  Wrapper,
+} from './recipes.styled';
 
 const Recipes = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,29 +57,44 @@ const Recipes = () => {
     currentPage * itemsPerPage
   );
 
+  const handleSearch = (searchTerm: string) => {
+    if (searchTerm) {
+      dispatch(fetchRecipesByName(searchTerm));
+    } else {
+      dispatch(fetchRecipesByName(''));
+    }
+  };
+
   return (
-    <Container>
-      <Title>Recipes</Title>
-      <Wrapper>
-        <Select
-          options={categoryOptions}
-          onChange={handleCategoryChange}
-          isClearable
-          styles={customStyles}
-          placeholder="Select a category"
-          value={categoryOptions.find(
-            (option) => option.value === selectedCategory
-          )}
+    <Wrapper>
+      <Container>
+        <Title>Recipes</Title>
+        <BlockWrapper>
+          <StyledWrapper>
+            <Select
+              options={categoryOptions}
+              onChange={handleCategoryChange}
+              isClearable
+              styles={customStyles}
+              placeholder="Select a category"
+              value={categoryOptions.find(
+                (option) => option.value === selectedCategory
+              )}
+            />
+          </StyledWrapper>
+          <StyledWrapper>
+            <Search onSearch={handleSearch} />
+          </StyledWrapper>
+        </BlockWrapper>
+        <RecipesList recipes={paginatedRecipes} />
+        <Pagination
+          totalItems={recipes.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
         />
-      </Wrapper>
-      <RecipesList recipes={paginatedRecipes} />
-      <Pagination
-        totalItems={recipes.length}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
-    </Container>
+      </Container>
+    </Wrapper>
   );
 };
 

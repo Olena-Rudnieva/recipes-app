@@ -1,11 +1,21 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  padding-top: 20px;
+  padding-bottom: 40px;
+`;
+
 export const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 40px;
 `;
 
-export const Wrapper = styled.div`
+export const BlockWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const StyledWrapper = styled.div`
   width: 250px;
   margin-bottom: 40px;
 `;
