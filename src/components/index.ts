@@ -6,4 +6,5 @@ export * from './logo';
 export * from './nav';
 export * from './burgerBtn';
 export * from './mobileMenu';
-export * from './hero';
+export * from './recipeData';
+export * from './recipesList';

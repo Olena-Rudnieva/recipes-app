@@ -45,6 +45,9 @@ export const fetchRecipeDetails = createAsyncThunk<
       params: { i: id },
     });
     const data = response.data;
+
+    console.log('data', data);
+
     if (data.meals && data.meals.length > 0) {
       return data.meals[0];
     } else {

@@ -4,8 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Layout } from './components';
 
-const Home = lazy(() => import('./pages/home'));
 const Recipes = lazy(() => import('./pages/recipes'));
+const RecipeDetail = lazy(() => import('./pages/recipeDetail'));
 const SelectedRecipes = lazy(() => import('./pages/selectedRecipes'));
 
 export const App = () => {
@@ -13,8 +13,8 @@ export const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/recipes" element={<Recipes />} />
+          <Route index element={<Recipes />} />
+          <Route path="/recipe/:id" element={<RecipeDetail />} />
           <Route path="/selectedRecipes" element={<SelectedRecipes />} />
         </Route>
       </Routes>
